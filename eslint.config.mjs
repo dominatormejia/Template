@@ -2,6 +2,7 @@ import js from "@eslint/js";
 import globals from "globals";
 import { defineConfig } from "eslint/config";
 import eslintPluginPrettier from "eslint-plugin-prettier";
+import eslintPluginJest from "eslint-plugin-jest";
 
 export default defineConfig([
   {
@@ -21,6 +22,20 @@ export default defineConfig([
       ...eslintPluginPrettier.configs.recommended.rules,
       "prettier/prettier": "error",
       "no-unused-vars": "warn",
+    },
+  },
+  {
+    files: ["**/*.test.{js,mjs,cjs}", "**/__tests__/**/*.{js,mjs,cjs}"],
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+      },
+    },
+    plugins: {
+      jest: eslintPluginJest,
+    },
+    rules: {
+      ...eslintPluginJest.configs.recommended.rules,
     },
   },
 ]);
